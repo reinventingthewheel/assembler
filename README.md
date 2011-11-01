@@ -37,6 +37,13 @@ The instruction set is:
   followed by commas).
 * `WRITE [$]<V>` Writes to output the value of `<V>`.
 * `READ <REG>` Reads from input into `<REG>`.
+* `EQ [$]<V> [$]<V>` Skips next instruction if arguments are equal.
+* `NEQ [$]<V> [$]<V>` Skips next instruction if arguments are not equal.
+* `GT [$]<V> [$]<V>` Skips next instruction if first argument is bigger than the second.
+* `LT [$]<V> [$]<V>` Skips next instruction if first argument is less than the second.
+* `GTE [$]<V> [$]<V>` Skips next instruction if first argument is greater or equal to the second.
+* `LTE [$]<V> [$]<V>` Skips next instruction if first argument is less or equal to the second.
+* `NOP` Does nothing (no operation).
 
 Where `<REG>` is a register name (A, B, C, D, E or F). `<V>` is whether a
 register or a integer (denoting a memory address). `<X>` is a register or a
