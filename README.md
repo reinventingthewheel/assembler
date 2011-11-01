@@ -2,7 +2,8 @@
 
 This is the second step in abtraction from the brainfuck machine.
 
-It's a assembly to micro-assembly compiler. Please see the "micro-assembler"
+It's a assembly to micro-assembly compiler. Please see the
+[micro-assembler](http://github.com/reinventingthewheel/micro-assembler)
 projects for details in this lower level language.
 
 ## Specification
