@@ -1,0 +1,59 @@
+; Assembler
+
+; *****************
+; Memory Reference
+; *****************
+; #01 -> char
+; #02 -> isComment
+
+
+; while register != EOF:
+    ;___MainLoop
+    R
+    + 1
+    = 0
+    J 18    ;JumpTo:___ShouldRead
+    J 50    ;JumpTo:___End
+    ;___ShouldRead
+    - 1
+    G 1     ; char = register
+
+
+    ; ******** Reading EOL to exit comments and finnish instruction ********
+    ; if register == '\n':
+    = 10
+    J 50    ;JumpTo:___IsNotEOL
+        S 0     ; register = false
+        G 2     ; isComment = false
+        S $1    ; register = char
+    ;___IsNotEOL
+
+
+    ; ******** Skipping readind if is inside a comment ********
+    ; if isComment:
+    S $2
+    = 1
+    J 50    ;JumpTo:___ShouldNotSkipChar
+        J 17    ;JumpTo:___MainLoop
+    ;___ShouldNotSkipChar
+    S $1    ; restores register value
+
+
+    ; ******** Entering comment mode ************
+    ; if register == ';':
+    = 59
+    J 18    ;JumpTo:___IsNotComment
+        S 1     ; register = true
+        G 2     ; isComment = true
+        S $1    ; register = char
+        J 14    ;JumpTo:___MainLoop
+    ;___IsNotComment
+
+
+    W   ;Writes char to stdout (debug)
+
+
+    J 14    ;JumpTo:___MainLoop
+
+
+;___End
