@@ -8,7 +8,7 @@ projects for details in this lower level language.
 
 ## Specification
 
-There are five registers for general use, and they can hold integers (or
+There are six registers for general use, and they can hold integers (or
 chars), named:
 
     A, B, C, D, E, F
