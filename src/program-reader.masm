@@ -29,7 +29,7 @@ G 4     ; lineIsEmpty = true
     G 1     ; char = register
 
 
-    ; ******** Reading EOL to exit comments and finnish instruction ********
+    ; ******** Reading EOL to exit comments and finish instruction ********
     ; if register == '\n':
     = 10
     J 00    ;JumpTo:___IsNotEOL
@@ -41,7 +41,6 @@ G 4     ; lineIsEmpty = true
         = 0
         J 00    ;JumpTo:___LineIsEmpty
             S $3
-            W
             + 1
             G 3     ; lineNumber++
 
