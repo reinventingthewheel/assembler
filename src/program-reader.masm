@@ -6,10 +6,18 @@
 ; #00 -> EOF
 ; #01 -> char
 ; #02 -> isComment
+; #03 -> lineNumber
+; #04 -> lineIsEmpy
 
 S 0
 - 1
 G 0     ;sets EOF(-1) to #00
+
+S 1
+G 3     ;lineNumber = 1
+
+S 1
+G 4     ; lineIsEmpty = true
 
 ; while register != EOF:
     ;___MainLoop
@@ -25,9 +33,27 @@ G 0     ;sets EOF(-1) to #00
     ; if register == '\n':
     = 10
     J 00    ;JumpTo:___IsNotEOL
-        S 0     ; register = false
+        S 0
         G 2     ; isComment = false
-        S $1    ; register = char
+
+        ; if not lineIsEmpty:
+        S $4
+        = 0
+        J 00    ;JumpTo:___LineIsEmpty
+            S $3
+            W
+            + 1
+            G 3     ; lineNumber++
+
+            S 1
+            G 4     ; lineIsEmpty = true
+
+            J 00    ;JumpTo:___printChar
+        ;___LineIsEmpty
+
+        S 1
+        G 4     ; lineIsEmpty = true
+        J 00    ;JumpTo:___MainLoop
     ;___IsNotEOL
 
 
@@ -52,6 +78,26 @@ G 0     ;sets EOF(-1) to #00
     ;___IsNotComment
 
 
+    ; ******** WhiteSpaces ************
+    ; if register == ' ':
+    = 32
+    J 00    ;JumpTo:___IsNotWhitespace
+        J 00    ;JumpTo:___printChar
+    ;___IsNotWhitespace
+
+    ; ******** Tabs ************
+    ; if register == (tab):
+    = 9
+    J 00    ;JumpTo:___IsNotTab
+        J 00    ;JumpTo:___printChar
+    ;___IsNotTab
+
+
+    S 0
+    G 4 ;lineIsEmpty = false
+
+    ;___printChar
+    S $1
     W   ;Writes char to stdout (debug)
 
 
